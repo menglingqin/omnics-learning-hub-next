@@ -35,6 +35,8 @@ export default function FilterSidebar({
   const topics = [
     { id: "Algorithms", getLabel: (d: Dictionary) => d.common.algorithms },
     { id: "Data Structures", getLabel: (d: Dictionary) => d.common.dataStructures },
+    { id: "Machine Learning", getLabel: (d: Dictionary) => d.common.machineLearning },
+    { id: "Fundamentals", getLabel: (d: Dictionary) => d.common.fundamentals },
   ];
 
   const languagesList = ["Python", "C++", "JS", "Go"];

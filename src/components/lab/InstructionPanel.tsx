@@ -8,12 +8,28 @@ export interface InstructionPanelProps {
   activeTab: "instructions" | "lesson";
   onTabChange: (tab: "instructions" | "lesson") => void;
   onViewHints?: () => void;
+  title: string;
+  difficulty: "Easy" | "Medium" | "Hard";
+  duration: string;
+  description: React.ReactNode;
+  exampleInput: string;
+  exampleOutput: string;
+  explanation?: string;
+  constraints: string[];
 }
 
 export default function InstructionPanel({
   activeTab,
   onTabChange,
   onViewHints,
+  title,
+  difficulty,
+  duration,
+  description,
+  exampleInput,
+  exampleOutput,
+  explanation,
+  constraints,
 }: InstructionPanelProps) {
   const { t } = useLanguage();
 
@@ -50,40 +66,44 @@ export default function InstructionPanel({
           <>
             <div>
               <h2 className="text-headline-md font-headline-md text-on-surface mb-2">
-                {t(d => d.lab.climbingStairsTitle)}
+                {title}
               </h2>
               <div className="flex items-center gap-3 mb-6">
-                <Badge variant="easy">
-                  {t(d => d.lab.easyBadge)}
+                <Badge variant={difficulty === "Easy" ? "easy" : difficulty === "Medium" ? "medium" : "hard"}>
+                  {difficulty === "Easy" ? t(d => d.lab.easyBadge) : difficulty === "Medium" ? "MEDIUM" : "HARD"}
                 </Badge>
                 <span className="text-on-surface-variant text-sm flex items-center gap-1">
                   <span className="material-symbols-outlined text-sm">
                     schedule
                   </span>
-                  15 mins
+                  {duration}
                 </span>
               </div>
             </div>
             
             <div className="prose prose-invert prose-sm max-w-none text-on-surface-variant space-y-4">
-              {t(d => d.lab.problemDescription)}
+              <div className="space-y-3">
+                {description}
+              </div>
               
               <div className="glass-panel p-4 rounded mt-4">
                 <h4 className="text-on-surface font-semibold mb-2">
                   {t(d => d.lab.example1)}
                 </h4>
-                <p className="font-code-sm text-code-sm mb-1">
-                  <span className="text-outline">Input:</span> n = 2
-                </p>
-                <p className="font-code-sm text-code-sm mb-1">
-                  <span className="text-outline">Output:</span> 2
-                </p>
-                <p className="text-xs mt-2 text-on-surface-variant">
-                  <span className="text-outline">
-                    {t(d => d.lab.explanationLabel)}
-                  </span>{" "}
-                  {t(d => d.lab.explanationText)}
-                </p>
+                <div className="font-code-sm text-code-sm mb-1 leading-relaxed">
+                  <span className="text-outline">Input:</span> <span className="text-on-surface font-mono">{exampleInput}</span>
+                </div>
+                <div className="font-code-sm text-code-sm mb-1 leading-relaxed">
+                  <span className="text-outline">Output:</span> <span className="text-on-surface font-mono">{exampleOutput}</span>
+                </div>
+                {explanation && (
+                  <p className="text-xs mt-2 text-on-surface-variant leading-relaxed">
+                    <span className="text-outline font-semibold">
+                      {t(d => d.lab.explanationLabel)}
+                    </span>{" "}
+                    {explanation}
+                  </p>
+                )}
               </div>
               
               <div className="mt-6">
@@ -91,9 +111,11 @@ export default function InstructionPanel({
                   {t(d => d.lab.constraintsLabel)}
                 </h4>
                 <ul className="list-disc pl-5 font-code-sm text-code-sm text-outline-variant space-y-1">
-                  <li>
-                    <code>1 &lt;= n &lt;= 45</code>
-                  </li>
+                  {constraints.map((constraint, index) => (
+                    <li key={index}>
+                      <code>{constraint}</code>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

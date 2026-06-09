@@ -9,6 +9,7 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testEnvironment: "jest-environment-jsdom",
+  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/", "<rootDir>/e2e/"],
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for Next.js 13.1.2+ but added for safety)
     "^@/(.*)$": "<rootDir>/src/$1",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { AppProvider } from "@/context/AppContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased dark">
       <body className="min-h-full flex flex-col bg-background text-on-surface">
-        <LanguageProvider>{children}</LanguageProvider>
+        <AppProvider>
+          <LanguageProvider>{children}</LanguageProvider>
+        </AppProvider>
       </body>
     </html>
   );

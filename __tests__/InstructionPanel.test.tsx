@@ -13,6 +13,33 @@ const LanguageToggler = () => {
   );
 };
 
+const TestWrapper = ({
+  activeTab,
+  onTabChange,
+  onViewHints,
+}: {
+  activeTab: "instructions" | "lesson";
+  onTabChange: jest.Mock;
+  onViewHints: jest.Mock;
+}) => {
+  const { t } = useLanguage();
+  return (
+    <InstructionPanel
+      activeTab={activeTab}
+      onTabChange={onTabChange}
+      onViewHints={onViewHints}
+      title={t(d => d.lab.climbingStairsTitle)}
+      difficulty="Easy"
+      duration="15 mins"
+      description={t(d => d.lab.problemDescription)}
+      exampleInput="n = 2"
+      exampleOutput="2"
+      explanation={t(d => d.lab.explanationText)}
+      constraints={["1 <= n <= 45"]}
+    />
+  );
+};
+
 describe("InstructionPanel Component", () => {
   const mockOnTabChange = jest.fn();
   const mockOnViewHints = jest.fn();
@@ -25,7 +52,7 @@ describe("InstructionPanel Component", () => {
     return render(
       <LanguageProvider>
         <LanguageToggler />
-        <InstructionPanel
+        <TestWrapper
           activeTab={activeTab}
           onTabChange={mockOnTabChange}
           onViewHints={mockOnViewHints}
